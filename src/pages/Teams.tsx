@@ -1,9 +1,11 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ListItem, Teams as TeamsList} from 'types';
+import Search from 'components/Search';
 import {getTeams as fetchTeams} from '../api';
 import Header from '../components/Header';
 import List from '../components/List';
 import {Container} from '../components/GlobalComponents';
+
 
 var MapT = (teams: TeamsList[]) => {
     return teams.map(team => {
@@ -24,6 +26,7 @@ var MapT = (teams: TeamsList[]) => {
 
 const Teams = () => {
     const [teams, setTeams] = React.useState<any>([]);
+    const [teamsFiltered, setTeamsFiltered] =  useState<any>();
     const [isLoading, setIsLoading] = React.useState<any>(true);
 
     React.useEffect(() => {
@@ -38,7 +41,8 @@ const Teams = () => {
     return (
         <Container>
             <Header title="Teams" showBackButton={false} />
-            <List items={MapT(teams)} isLoading={isLoading} />
+            <Search items={teams} filterItems={setTeamsFiltered} />
+            <List items={teamsFiltered?MapT(teamsFiltered):MapT(teams)} isLoading={isLoading} />
         </Container>
     );
 };

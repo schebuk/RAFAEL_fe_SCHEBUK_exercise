@@ -1,11 +1,13 @@
-import * as React from 'react';
+import  React, {useEffect,useState}  from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {ListItem, UserData} from 'types';
+import Search from 'components/Search';
 import {getTeamOverview, getUserData} from '../api';
 import Card from '../components/Card';
 import {Container} from '../components/GlobalComponents';
 import Header from '../components/Header';
 import List from '../components/List';
+
 
 var mapArray = (users: UserData[]) => {
     return users.map(u => {
@@ -62,33 +64,34 @@ interface PageState {
 const TeamOverview = () => {
     const location = useLocation();
     const {teamId} = useParams();
-    const [pageData, setPageData] = React.useState<PageState>({});
+    const [teamLead, setTeamLead] = useState<UserData>();
+    const [teamMembers, setTeamMembers] = useState<UserData[]>([]);
+    const [teamMembersFiltered, setTeamMembersFiltered] = React.useState<UserData[]>();
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
     React.useEffect(() => {
-        var getTeamUsers = async () => {
+        async function getTeamUsers() {
             const {teamLeadId, teamMemberIds = []} = await getTeamOverview(teamId);
-            const teamLead = await getUserData(teamLeadId);
-
-            const teamMembers = [];
-            for(var teamMemberId of teamMemberIds) {
+            setTeamLead(await getUserData(teamLeadId));
+            const teamMembersAux = [];
+            for(const teamMemberId of teamMemberIds) {
                 const data = await getUserData(teamMemberId);
-                teamMembers.push(data);
+                data.name = `${data.firstName} ${data.lastName}`;
+                teamMembersAux.push(data);
             }
-            setPageData({
-                teamLead,
-                teamMembers,
-            });
+            setTeamMembers(teamMembersAux);
             setIsLoading(false);
-        };
+        }
         getTeamUsers();
     }, [teamId]);
 
     return (
         <Container>
             <Header title={`Team ${location.state.name}`} />
-            {!isLoading && mapTLead(pageData.teamLead)}
-            <List items={mapArray(pageData?.teamMembers ?? [])} isLoading={isLoading} />
+            
+           {!isLoading && mapTLead(teamLead)}
+           <Search items={teamMembers} filterItems={setTeamMembersFiltered} />
+           <List items={teamMembersFiltered?mapArray(teamMembersFiltered): mapArray(teamMembers)} isLoading={isLoading} />
         </Container>
     );
 };
