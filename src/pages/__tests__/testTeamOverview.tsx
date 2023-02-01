@@ -36,14 +36,15 @@ describe('TeamOverview', () => {
         };
         const userData = {
             id: '2',
+            name:'user',
             firstName: 'userData',
             lastName: 'userData',
             displayName: 'userData',
             location: '',
             avatar: '',
         };
-        jest.spyOn(API, 'getTeamOverview').mockImplementationOnce(() => Promise.resolve({} as any));
-        jest.spyOn(API, 'getUserData').mockImplementationOnce(() => Promise.resolve({} as any));
+        jest.spyOn(API, 'getTeamOverview').mockResolvedValue(teamOverview);
+        jest.spyOn(API, 'getUserData').mockResolvedValue(userData);
 
         render(<TeamOverview />);
 

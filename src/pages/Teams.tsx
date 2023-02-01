@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {ListItem, Teams as TeamsList} from 'types';
 import Search from 'components/Search';
 import {getTeams as fetchTeams} from '../api';

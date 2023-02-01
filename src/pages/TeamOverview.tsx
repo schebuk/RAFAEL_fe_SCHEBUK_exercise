@@ -1,4 +1,4 @@
-import  React, {useEffect,useState}  from 'react';
+import  React, {useState}  from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {ListItem, UserData} from 'types';
 import Search from 'components/Search';
@@ -56,11 +56,6 @@ var mapTLead = tlead => {
     return <Card columns={columns} url={`/user/${tlead.id}`} navigationProps={tlead} />;
 };
 
-interface PageState {
-    teamLead?: UserData;
-    teamMembers?: UserData[];
-}
-
 const TeamOverview = () => {
     const location = useLocation();
     const {teamId} = useParams();
@@ -76,6 +71,7 @@ const TeamOverview = () => {
             const teamMembersAux = [];
             for(const teamMemberId of teamMemberIds) {
                 const data = await getUserData(teamMemberId);
+                console.log(data);
                 data.name = `${data.firstName} ${data.lastName}`;
                 teamMembersAux.push(data);
             }
