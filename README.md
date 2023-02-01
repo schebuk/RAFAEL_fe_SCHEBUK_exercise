@@ -2,7 +2,10 @@
 
 # Solution Improvement
 
-### Describe what you have improved in the solution
+created the search component 
+fixed the tests variable declaration 
+fixed the teamoverview test
+added some styles witch bootstrap
 
 ## To Run the project you must run:
 
