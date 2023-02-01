@@ -71,7 +71,6 @@ const TeamOverview = () => {
             const teamMembersAux = [];
             for(const teamMemberId of teamMemberIds) {
                 const data = await getUserData(teamMemberId);
-                console.log(data);
                 data.name = `${data.firstName} ${data.lastName}`;
                 teamMembersAux.push(data);
             }

@@ -4,6 +4,8 @@ import TeamOverview from './pages/TeamOverview';
 import Teams from './pages/Teams';
 import UserOverview from './pages/UserOverview';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const App = () => {
     var router = createBrowserRouter([
         {

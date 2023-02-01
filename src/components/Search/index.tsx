@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
+import Form from 'react-bootstrap/Form';
+
 interface Props {
     items: any[];
     filterItems: (items:any[]) => void;
@@ -17,7 +19,6 @@ export default function Search({items, filterItems}:Props) {
     };
  
     useEffect(() => {
-        // set the current state
         if(searchString.length > 0) {
             const itemsFiltered = items.filter(item => {           
                 if(item.name &&  item.name.toLocaleLowerCase().indexOf(searchString) > -1 ) {
@@ -32,11 +33,11 @@ export default function Search({items, filterItems}:Props) {
       }, [searchString]);
     return (
 
-        <div className="flex items-center mt-8 m-8">   
-            <div className="relative w-full">
-                <input data-testid="search" value={searchString} onChange={handleChange} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search heare..." required />
-            </div>
-        </div>
+        <Form>
+            <Form.Group className="mb-8">
+                <Form.Control className=" "  data-testid="search" value={searchString} onChange={handleChange} type="search" id="default-search" placeholder="Search heare..." required />
+            </Form.Group> 
+        </Form>
       
     ); 
 }

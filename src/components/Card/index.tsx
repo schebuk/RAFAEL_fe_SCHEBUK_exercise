@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Teams, UserData} from 'types';
+import Cards from 'react-bootstrap/Card';
+import Stack from 'react-bootstrap/Stack';
 import {Container} from './styles';
+
 
 interface Props {
     id?: string;
@@ -24,7 +27,7 @@ const Card = ({
     const navigate = useNavigate();
 
     return (
-        <Container
+        <Cards
             data-testid={`cardContainer-${id}`}
             hasNavigation={hasNavigation}
             onClick={(e: Event) => {
@@ -35,13 +38,22 @@ const Card = ({
                 }
                 e.preventDefault();
             }}
+            bg = 'Dark'
+            text = 'Dark'
+            border="primary"
+            className="text-center"
+            
         >
-            {columns.map(({key: columnKey, value}) => (
-                <p key={columnKey}>
-                    <strong>{columnKey}</strong>&nbsp;{value}
-                </p>
-            ))}
-        </Container>
+                {columns.map(({key: columnKey, value}) => (
+                
+    <Stack direction="horizontal" gap={3}>
+                        <Cards.Body>
+                            <Cards.Title>{columnKey}</Cards.Title>
+                            <Cards.Text>{value}</Cards.Text>
+                        </Cards.Body>
+                    </Stack>
+                ))}
+        </Cards>
     );
 };
 
